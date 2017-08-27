@@ -11,138 +11,46 @@
      cleanup_days: 30
      language: "en_US"
      lang: "{{language}}.UTF-8"
-     timezone: "Europe/Paris"
      ansible_pkg_state: latest
      packaging_ubuntu_extras_repository: true
      packaging_ubuntu_partner_repository: true
      packaging_ubuntu_multiverse_repository: true
      packaging_packages:
        - zsh
-       - vim
+       - emacs
        - curl
        - unzip
-       - icedtea-plugin
-# dev
-       - ipython
        - git
-       - tig
-       - python-setuptools
-       - less
-       - maven
-       - build-essential
-       - g++
        - nodejs
        - nodejs-dev
-       - valgrind
-       - graphviz
-       - protobuf-compiler
        - rubygems
        - ruby-dev
-       - openjdk-8-jdk
-# admin
-       - openssh-server
-       - nmap
+       # admin
        - htop
-       - tree
-       - iotop
-       - sysstat
-       - screen
-       - tmux
-       - openvpn
-       - inetutils-traceroute
-       - sshfs
-       - vde2
-       - cryptsetup
-       - traceroute
-       - powertop
-       - aptitude
-       - aircrack-ng
-       - dns2tcp
-       - autofs
-       - ecryptfs-utils
-       - lm-sensors
        - gpm
        - whois
        - dstat
        - iftop
        - nload
        - speedometer
-       - nodejs-legacy
-   roles:
-    - timezone
-    - lang  
-    - role: ufw
-      uwf_rules:
-       - rule: allow
-         interface: eth0
-         to_port: 22
-         protocol: tcp
-    - packaging
-    - scala
-    - role: sudo
-      sudo_files:
-         - name: vpn-user
-           vars:
-             - "%vpn-user ALL=NOPASSWD: /usr/sbin/openvpn"
-#UI
-    - role: packaging
-      packaging_packages:
-       - keepassx
-       - gitg
-       - virtualbox
-       - qemu
-       - chromium-browser
-       - terminator
-       - skype
-       - firefox
-       - vlc
-       - audacity
-       - filezilla
-       - libreoffice
-       - baobab
-       - golang-go
-       - gparted
-       - quicksynergy
-       - simple-scan
-       - usb-creator-gtk
-       - virt-manager
-       - wireshark
-       - synergy
-       - gimp
-    - role: users
-      users_groups:
-         - name: "vpn-user"
-           gid: 1500
-    - ansible
-    - vagrant
-    - intellij
-    - spotify
-    - slack
-    - dropbox
-    - hangout
-    - docker
-    - visual-studio-code
-    - role: brother
-      brother_printers_to_install: ['DCP-375CW']
    tasks :
+    - name: install aptitude
+      apt:
+        name: aptitude 
+        state: present
     - name: Ensure NPM is installed
       apt: pkg=npm
       tags: trash
-    - name: Ensure trash is installed
-      npm: name=trash global=yes
+    - name: Ensure NPM is installed
+      apt: pkg=npm
       tags: trash
-    - name: Ensure ~/Downloads is daily cleanup
-      cron: name="Cleanup ~/Downloads folder" special_time=daily user="{{ansible_env.SUDO_USER|default(ansible_user_id)}}" job="find ~/Downloads/ -mtime +{{cleanup_days}} -exec trash '{}' \;"
-      sudo: no
-      tags: trash
-#    - name: Ensure marks exist
-#      copy: src=files/marks.sh dest=/etc/profile.d/marks.sh 
-    - name: Install python apps
-      pip: name={{item}}
-      with_items: 
-        - virtualenv
-        - autoenv
-    - name: Install ruby apps
-      gem: name={{item}}
-      with_items:
-        - travis
+    - name: Install the package "vlc"
+      apt:
+        name: vlc
+        state: present
+    - name: Install the package "gdm"
+      apt:
+        name: gdm
+        state: present
+   roles:
+     - role: ansible-xfce4-desktop

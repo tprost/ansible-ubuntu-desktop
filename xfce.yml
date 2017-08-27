@@ -1,0 +1,6 @@
+---
+ - hosts: alln
+   become: yes
+   become_method: sudo
+   roles:
+     - role: webofmars.xfce4-desktop
