@@ -1,9 +1,9 @@
-[submodule "roles/sudo"]
-	path = roles/sudo
-	url = https://www.github.com/:jdauphant/ansible-role-sudo
-[submodule "roles/vagrant"]
-	path = roles/vagrant
-	url = https://www.github.com/:jdauphant/ansible-role-vagrant
 [submodule "roles/ansible"]
 	path = roles/ansible
-	url = https://www.github.com/:jdauphant/ansible-role-ansible
+	url = https://github.com/jdauphant/ansible-role-ansible
+[submodule "roles/sudo"]
+	path = roles/sudo
+	url = https://github.com/jdauphant/ansible-role-sudo
+[submodule "roles/vagrant"]
+	path = roles/vagrant
+	url = https://github.com/jdauphant/ansible-role-vagrant
